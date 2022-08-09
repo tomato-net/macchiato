@@ -10,6 +10,12 @@
       "StackName": "amplify-macchiato-dev-195328",
       "StackId": "arn:aws:cloudformation:eu-central-1:234566038455:stack/amplify-macchiato-dev-195328/8f6e3390-1814-11ed-9bdf-0af0001a441a",
       "AmplifyAppId": "dmhskzq6nebi2"
+    },
+    "categories": {
+      "auth": {
+        "macchiatoc1e89050": {},
+        "true": {}
+      }
     }
   }
 }

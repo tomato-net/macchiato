@@ -1,0 +1,16 @@
+{
+  "resourceName": "audiobooks",
+  "policyUUID": "d5311556",
+  "bucketName": "audiobooks",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
