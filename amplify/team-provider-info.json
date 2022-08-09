@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-macchiato-dev-195328-authRole",
+      "UnauthRoleArn": "arn:aws:iam::234566038455:role/amplify-macchiato-dev-195328-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::234566038455:role/amplify-macchiato-dev-195328-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-macchiato-dev-195328-deployment",
+      "UnauthRoleName": "amplify-macchiato-dev-195328-unauthRole",
+      "StackName": "amplify-macchiato-dev-195328",
+      "StackId": "arn:aws:cloudformation:eu-central-1:234566038455:stack/amplify-macchiato-dev-195328/8f6e3390-1814-11ed-9bdf-0af0001a441a",
+      "AmplifyAppId": "dmhskzq6nebi2"
+    }
+  }
+}
