@@ -17,5 +17,23 @@
         "true": {}
       }
     }
+  },
+  "production": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-macchiato-production-213523-authRole",
+      "UnauthRoleArn": "arn:aws:iam::234566038455:role/amplify-macchiato-production-213523-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::234566038455:role/amplify-macchiato-production-213523-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-macchiato-production-213523-deployment",
+      "UnauthRoleName": "amplify-macchiato-production-213523-unauthRole",
+      "StackName": "amplify-macchiato-production-213523",
+      "StackId": "arn:aws:cloudformation:eu-central-1:234566038455:stack/amplify-macchiato-production-213523/cbaa6550-1822-11ed-b994-027c421ce796",
+      "AmplifyAppId": "dmhskzq6nebi2"
+    },
+    "categories": {
+      "auth": {
+        "macchiatoc1e89050": {}
+      }
+    }
   }
 }
