@@ -8,28 +8,7 @@ export const getBook = /* GraphQL */ `
       id
       title
       blurb {
-        id
-        book {
-          id
-          title
-          blurb {
-            id
-            content
-            createdAt
-            updatedAt
-            blurbBookId
-          }
-          parts {
-            nextToken
-          }
-          createdAt
-          updatedAt
-          bookBlurbId
-        }
         content
-        createdAt
-        updatedAt
-        blurbBookId
       }
       parts {
         items {
@@ -41,7 +20,6 @@ export const getBook = /* GraphQL */ `
             title
             createdAt
             updatedAt
-            bookBlurbId
           }
           chapters {
             nextToken
@@ -54,7 +32,6 @@ export const getBook = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      bookBlurbId
     }
   }
 `;
@@ -69,18 +46,7 @@ export const listBooks = /* GraphQL */ `
         id
         title
         blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
           content
-          createdAt
-          updatedAt
-          blurbBookId
         }
         parts {
           items {
@@ -95,85 +61,6 @@ export const listBooks = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        bookBlurbId
-      }
-      nextToken
-    }
-  }
-`;
-export const getBlurb = /* GraphQL */ `
-  query GetBlurb($id: ID!) {
-    getBlurb(id: $id) {
-      id
-      book {
-        id
-        title
-        blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
-          content
-          createdAt
-          updatedAt
-          blurbBookId
-        }
-        parts {
-          items {
-            id
-            name
-            order
-            createdAt
-            updatedAt
-            bookPartsId
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-        bookBlurbId
-      }
-      content
-      createdAt
-      updatedAt
-      blurbBookId
-    }
-  }
-`;
-export const listBlurbs = /* GraphQL */ `
-  query ListBlurbs(
-    $filter: ModelBlurbFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listBlurbs(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        book {
-          id
-          title
-          blurb {
-            id
-            content
-            createdAt
-            updatedAt
-            blurbBookId
-          }
-          parts {
-            nextToken
-          }
-          createdAt
-          updatedAt
-          bookBlurbId
-        }
-        content
-        createdAt
-        updatedAt
-        blurbBookId
       }
       nextToken
     }
@@ -189,18 +76,7 @@ export const getPart = /* GraphQL */ `
         id
         title
         blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
           content
-          createdAt
-          updatedAt
-          blurbBookId
         }
         parts {
           items {
@@ -215,7 +91,6 @@ export const getPart = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        bookBlurbId
       }
       chapters {
         items {
@@ -258,18 +133,13 @@ export const listParts = /* GraphQL */ `
           id
           title
           blurb {
-            id
             content
-            createdAt
-            updatedAt
-            blurbBookId
           }
           parts {
             nextToken
           }
           createdAt
           updatedAt
-          bookBlurbId
         }
         chapters {
           items {
@@ -305,18 +175,13 @@ export const getChapter = /* GraphQL */ `
           id
           title
           blurb {
-            id
             content
-            createdAt
-            updatedAt
-            blurbBookId
           }
           parts {
             nextToken
           }
           createdAt
           updatedAt
-          bookBlurbId
         }
         chapters {
           items {
@@ -361,7 +226,6 @@ export const listChapters = /* GraphQL */ `
             title
             createdAt
             updatedAt
-            bookBlurbId
           }
           chapters {
             nextToken

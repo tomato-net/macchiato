@@ -5,7 +5,11 @@
 export type CreateBookInput = {
   id?: string | null,
   title: string,
-  bookBlurbId?: string | null,
+  blurb?: BlurbInput | null,
+};
+
+export type BlurbInput = {
+  content: string,
 };
 
 export type ModelBookConditionInput = {
@@ -13,7 +17,6 @@ export type ModelBookConditionInput = {
   and?: Array< ModelBookConditionInput | null > | null,
   or?: Array< ModelBookConditionInput | null > | null,
   not?: ModelBookConditionInput | null,
-  bookBlurbId?: ModelIDInput | null,
 };
 
 export type ModelStringInput = {
@@ -56,22 +59,6 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
 export type Book = {
   __typename: "Book",
   id: string,
@@ -80,17 +67,11 @@ export type Book = {
   parts?: ModelPartConnection | null,
   createdAt: string,
   updatedAt: string,
-  bookBlurbId?: string | null,
 };
 
 export type Blurb = {
   __typename: "Blurb",
-  id: string,
-  book?: Book | null,
   content: string,
-  createdAt: string,
-  updatedAt: string,
-  blurbBookId?: string | null,
 };
 
 export type ModelPartConnection = {
@@ -132,34 +113,10 @@ export type Chapter = {
 export type UpdateBookInput = {
   id: string,
   title?: string | null,
-  bookBlurbId?: string | null,
+  blurb?: BlurbInput | null,
 };
 
 export type DeleteBookInput = {
-  id: string,
-};
-
-export type CreateBlurbInput = {
-  id?: string | null,
-  content: string,
-  blurbBookId?: string | null,
-};
-
-export type ModelBlurbConditionInput = {
-  content?: ModelStringInput | null,
-  and?: Array< ModelBlurbConditionInput | null > | null,
-  or?: Array< ModelBlurbConditionInput | null > | null,
-  not?: ModelBlurbConditionInput | null,
-  blurbBookId?: ModelIDInput | null,
-};
-
-export type UpdateBlurbInput = {
-  id: string,
-  content?: string | null,
-  blurbBookId?: string | null,
-};
-
-export type DeleteBlurbInput = {
   id: string,
 };
 
@@ -189,6 +146,22 @@ export type ModelIntInput = {
   between?: Array< number | null > | null,
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
+};
+
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
 };
 
 export type UpdatePartInput = {
@@ -238,27 +211,11 @@ export type ModelBookFilterInput = {
   and?: Array< ModelBookFilterInput | null > | null,
   or?: Array< ModelBookFilterInput | null > | null,
   not?: ModelBookFilterInput | null,
-  bookBlurbId?: ModelIDInput | null,
 };
 
 export type ModelBookConnection = {
   __typename: "ModelBookConnection",
   items:  Array<Book | null >,
-  nextToken?: string | null,
-};
-
-export type ModelBlurbFilterInput = {
-  id?: ModelIDInput | null,
-  content?: ModelStringInput | null,
-  and?: Array< ModelBlurbFilterInput | null > | null,
-  or?: Array< ModelBlurbFilterInput | null > | null,
-  not?: ModelBlurbFilterInput | null,
-  blurbBookId?: ModelIDInput | null,
-};
-
-export type ModelBlurbConnection = {
-  __typename: "ModelBlurbConnection",
-  items:  Array<Blurb | null >,
   nextToken?: string | null,
 };
 
@@ -320,13 +277,6 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionBlurbFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  content?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionBlurbFilterInput | null > | null,
-  or?: Array< ModelSubscriptionBlurbFilterInput | null > | null,
-};
-
 export type ModelSubscriptionPartFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
@@ -368,31 +318,7 @@ export type CreateBookMutation = {
     title: string,
     blurb?:  {
       __typename: "Blurb",
-      id: string,
-      book?:  {
-        __typename: "Book",
-        id: string,
-        title: string,
-        blurb?:  {
-          __typename: "Blurb",
-          id: string,
-          content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
-        } | null,
-        parts?:  {
-          __typename: "ModelPartConnection",
-          nextToken?: string | null,
-        } | null,
-        createdAt: string,
-        updatedAt: string,
-        bookBlurbId?: string | null,
-      } | null,
       content: string,
-      createdAt: string,
-      updatedAt: string,
-      blurbBookId?: string | null,
     } | null,
     parts?:  {
       __typename: "ModelPartConnection",
@@ -407,7 +333,6 @@ export type CreateBookMutation = {
           title: string,
           createdAt: string,
           updatedAt: string,
-          bookBlurbId?: string | null,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -421,7 +346,6 @@ export type CreateBookMutation = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    bookBlurbId?: string | null,
   } | null,
 };
 
@@ -437,31 +361,7 @@ export type UpdateBookMutation = {
     title: string,
     blurb?:  {
       __typename: "Blurb",
-      id: string,
-      book?:  {
-        __typename: "Book",
-        id: string,
-        title: string,
-        blurb?:  {
-          __typename: "Blurb",
-          id: string,
-          content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
-        } | null,
-        parts?:  {
-          __typename: "ModelPartConnection",
-          nextToken?: string | null,
-        } | null,
-        createdAt: string,
-        updatedAt: string,
-        bookBlurbId?: string | null,
-      } | null,
       content: string,
-      createdAt: string,
-      updatedAt: string,
-      blurbBookId?: string | null,
     } | null,
     parts?:  {
       __typename: "ModelPartConnection",
@@ -476,7 +376,6 @@ export type UpdateBookMutation = {
           title: string,
           createdAt: string,
           updatedAt: string,
-          bookBlurbId?: string | null,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -490,7 +389,6 @@ export type UpdateBookMutation = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    bookBlurbId?: string | null,
   } | null,
 };
 
@@ -506,31 +404,7 @@ export type DeleteBookMutation = {
     title: string,
     blurb?:  {
       __typename: "Blurb",
-      id: string,
-      book?:  {
-        __typename: "Book",
-        id: string,
-        title: string,
-        blurb?:  {
-          __typename: "Blurb",
-          id: string,
-          content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
-        } | null,
-        parts?:  {
-          __typename: "ModelPartConnection",
-          nextToken?: string | null,
-        } | null,
-        createdAt: string,
-        updatedAt: string,
-        bookBlurbId?: string | null,
-      } | null,
       content: string,
-      createdAt: string,
-      updatedAt: string,
-      blurbBookId?: string | null,
     } | null,
     parts?:  {
       __typename: "ModelPartConnection",
@@ -545,7 +419,6 @@ export type DeleteBookMutation = {
           title: string,
           createdAt: string,
           updatedAt: string,
-          bookBlurbId?: string | null,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -559,166 +432,6 @@ export type DeleteBookMutation = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    bookBlurbId?: string | null,
-  } | null,
-};
-
-export type CreateBlurbMutationVariables = {
-  input: CreateBlurbInput,
-  condition?: ModelBlurbConditionInput | null,
-};
-
-export type CreateBlurbMutation = {
-  createBlurb?:  {
-    __typename: "Blurb",
-    id: string,
-    book?:  {
-      __typename: "Book",
-      id: string,
-      title: string,
-      blurb?:  {
-        __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
-        content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
-      } | null,
-      parts?:  {
-        __typename: "ModelPartConnection",
-        items:  Array< {
-          __typename: "Part",
-          id: string,
-          name: string,
-          order: number,
-          createdAt: string,
-          updatedAt: string,
-          bookPartsId?: string | null,
-        } | null >,
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      bookBlurbId?: string | null,
-    } | null,
-    content: string,
-    createdAt: string,
-    updatedAt: string,
-    blurbBookId?: string | null,
-  } | null,
-};
-
-export type UpdateBlurbMutationVariables = {
-  input: UpdateBlurbInput,
-  condition?: ModelBlurbConditionInput | null,
-};
-
-export type UpdateBlurbMutation = {
-  updateBlurb?:  {
-    __typename: "Blurb",
-    id: string,
-    book?:  {
-      __typename: "Book",
-      id: string,
-      title: string,
-      blurb?:  {
-        __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
-        content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
-      } | null,
-      parts?:  {
-        __typename: "ModelPartConnection",
-        items:  Array< {
-          __typename: "Part",
-          id: string,
-          name: string,
-          order: number,
-          createdAt: string,
-          updatedAt: string,
-          bookPartsId?: string | null,
-        } | null >,
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      bookBlurbId?: string | null,
-    } | null,
-    content: string,
-    createdAt: string,
-    updatedAt: string,
-    blurbBookId?: string | null,
-  } | null,
-};
-
-export type DeleteBlurbMutationVariables = {
-  input: DeleteBlurbInput,
-  condition?: ModelBlurbConditionInput | null,
-};
-
-export type DeleteBlurbMutation = {
-  deleteBlurb?:  {
-    __typename: "Blurb",
-    id: string,
-    book?:  {
-      __typename: "Book",
-      id: string,
-      title: string,
-      blurb?:  {
-        __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
-        content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
-      } | null,
-      parts?:  {
-        __typename: "ModelPartConnection",
-        items:  Array< {
-          __typename: "Part",
-          id: string,
-          name: string,
-          order: number,
-          createdAt: string,
-          updatedAt: string,
-          bookPartsId?: string | null,
-        } | null >,
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      bookBlurbId?: string | null,
-    } | null,
-    content: string,
-    createdAt: string,
-    updatedAt: string,
-    blurbBookId?: string | null,
   } | null,
 };
 
@@ -739,19 +452,7 @@ export type CreatePartMutation = {
       title: string,
       blurb?:  {
         __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
         content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
       } | null,
       parts?:  {
         __typename: "ModelPartConnection",
@@ -768,7 +469,6 @@ export type CreatePartMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      bookBlurbId?: string | null,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -816,19 +516,7 @@ export type UpdatePartMutation = {
       title: string,
       blurb?:  {
         __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
         content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
       } | null,
       parts?:  {
         __typename: "ModelPartConnection",
@@ -845,7 +533,6 @@ export type UpdatePartMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      bookBlurbId?: string | null,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -893,19 +580,7 @@ export type DeletePartMutation = {
       title: string,
       blurb?:  {
         __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
         content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
       } | null,
       parts?:  {
         __typename: "ModelPartConnection",
@@ -922,7 +597,6 @@ export type DeletePartMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      bookBlurbId?: string | null,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -975,11 +649,7 @@ export type CreateChapterMutation = {
         title: string,
         blurb?:  {
           __typename: "Blurb",
-          id: string,
           content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
         } | null,
         parts?:  {
           __typename: "ModelPartConnection",
@@ -987,7 +657,6 @@ export type CreateChapterMutation = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        bookBlurbId?: string | null,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -1036,11 +705,7 @@ export type UpdateChapterMutation = {
         title: string,
         blurb?:  {
           __typename: "Blurb",
-          id: string,
           content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
         } | null,
         parts?:  {
           __typename: "ModelPartConnection",
@@ -1048,7 +713,6 @@ export type UpdateChapterMutation = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        bookBlurbId?: string | null,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -1097,11 +761,7 @@ export type DeleteChapterMutation = {
         title: string,
         blurb?:  {
           __typename: "Blurb",
-          id: string,
           content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
         } | null,
         parts?:  {
           __typename: "ModelPartConnection",
@@ -1109,7 +769,6 @@ export type DeleteChapterMutation = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        bookBlurbId?: string | null,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -1147,31 +806,7 @@ export type GetBookQuery = {
     title: string,
     blurb?:  {
       __typename: "Blurb",
-      id: string,
-      book?:  {
-        __typename: "Book",
-        id: string,
-        title: string,
-        blurb?:  {
-          __typename: "Blurb",
-          id: string,
-          content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
-        } | null,
-        parts?:  {
-          __typename: "ModelPartConnection",
-          nextToken?: string | null,
-        } | null,
-        createdAt: string,
-        updatedAt: string,
-        bookBlurbId?: string | null,
-      } | null,
       content: string,
-      createdAt: string,
-      updatedAt: string,
-      blurbBookId?: string | null,
     } | null,
     parts?:  {
       __typename: "ModelPartConnection",
@@ -1186,7 +821,6 @@ export type GetBookQuery = {
           title: string,
           createdAt: string,
           updatedAt: string,
-          bookBlurbId?: string | null,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -1200,7 +834,6 @@ export type GetBookQuery = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    bookBlurbId?: string | null,
   } | null,
 };
 
@@ -1219,19 +852,7 @@ export type ListBooksQuery = {
       title: string,
       blurb?:  {
         __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
         content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
       } | null,
       parts?:  {
         __typename: "ModelPartConnection",
@@ -1248,100 +869,6 @@ export type ListBooksQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      bookBlurbId?: string | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetBlurbQueryVariables = {
-  id: string,
-};
-
-export type GetBlurbQuery = {
-  getBlurb?:  {
-    __typename: "Blurb",
-    id: string,
-    book?:  {
-      __typename: "Book",
-      id: string,
-      title: string,
-      blurb?:  {
-        __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
-        content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
-      } | null,
-      parts?:  {
-        __typename: "ModelPartConnection",
-        items:  Array< {
-          __typename: "Part",
-          id: string,
-          name: string,
-          order: number,
-          createdAt: string,
-          updatedAt: string,
-          bookPartsId?: string | null,
-        } | null >,
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      bookBlurbId?: string | null,
-    } | null,
-    content: string,
-    createdAt: string,
-    updatedAt: string,
-    blurbBookId?: string | null,
-  } | null,
-};
-
-export type ListBlurbsQueryVariables = {
-  filter?: ModelBlurbFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListBlurbsQuery = {
-  listBlurbs?:  {
-    __typename: "ModelBlurbConnection",
-    items:  Array< {
-      __typename: "Blurb",
-      id: string,
-      book?:  {
-        __typename: "Book",
-        id: string,
-        title: string,
-        blurb?:  {
-          __typename: "Blurb",
-          id: string,
-          content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
-        } | null,
-        parts?:  {
-          __typename: "ModelPartConnection",
-          nextToken?: string | null,
-        } | null,
-        createdAt: string,
-        updatedAt: string,
-        bookBlurbId?: string | null,
-      } | null,
-      content: string,
-      createdAt: string,
-      updatedAt: string,
-      blurbBookId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1363,19 +890,7 @@ export type GetPartQuery = {
       title: string,
       blurb?:  {
         __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
         content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
       } | null,
       parts?:  {
         __typename: "ModelPartConnection",
@@ -1392,7 +907,6 @@ export type GetPartQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      bookBlurbId?: string | null,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -1443,11 +957,7 @@ export type ListPartsQuery = {
         title: string,
         blurb?:  {
           __typename: "Blurb",
-          id: string,
           content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
         } | null,
         parts?:  {
           __typename: "ModelPartConnection",
@@ -1455,7 +965,6 @@ export type ListPartsQuery = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        bookBlurbId?: string | null,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -1500,11 +1009,7 @@ export type GetChapterQuery = {
         title: string,
         blurb?:  {
           __typename: "Blurb",
-          id: string,
           content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
         } | null,
         parts?:  {
           __typename: "ModelPartConnection",
@@ -1512,7 +1017,6 @@ export type GetChapterQuery = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        bookBlurbId?: string | null,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -1564,7 +1068,6 @@ export type ListChaptersQuery = {
           title: string,
           createdAt: string,
           updatedAt: string,
-          bookBlurbId?: string | null,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -1594,31 +1097,7 @@ export type OnCreateBookSubscription = {
     title: string,
     blurb?:  {
       __typename: "Blurb",
-      id: string,
-      book?:  {
-        __typename: "Book",
-        id: string,
-        title: string,
-        blurb?:  {
-          __typename: "Blurb",
-          id: string,
-          content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
-        } | null,
-        parts?:  {
-          __typename: "ModelPartConnection",
-          nextToken?: string | null,
-        } | null,
-        createdAt: string,
-        updatedAt: string,
-        bookBlurbId?: string | null,
-      } | null,
       content: string,
-      createdAt: string,
-      updatedAt: string,
-      blurbBookId?: string | null,
     } | null,
     parts?:  {
       __typename: "ModelPartConnection",
@@ -1633,7 +1112,6 @@ export type OnCreateBookSubscription = {
           title: string,
           createdAt: string,
           updatedAt: string,
-          bookBlurbId?: string | null,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -1647,7 +1125,6 @@ export type OnCreateBookSubscription = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    bookBlurbId?: string | null,
   } | null,
 };
 
@@ -1662,31 +1139,7 @@ export type OnUpdateBookSubscription = {
     title: string,
     blurb?:  {
       __typename: "Blurb",
-      id: string,
-      book?:  {
-        __typename: "Book",
-        id: string,
-        title: string,
-        blurb?:  {
-          __typename: "Blurb",
-          id: string,
-          content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
-        } | null,
-        parts?:  {
-          __typename: "ModelPartConnection",
-          nextToken?: string | null,
-        } | null,
-        createdAt: string,
-        updatedAt: string,
-        bookBlurbId?: string | null,
-      } | null,
       content: string,
-      createdAt: string,
-      updatedAt: string,
-      blurbBookId?: string | null,
     } | null,
     parts?:  {
       __typename: "ModelPartConnection",
@@ -1701,7 +1154,6 @@ export type OnUpdateBookSubscription = {
           title: string,
           createdAt: string,
           updatedAt: string,
-          bookBlurbId?: string | null,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -1715,7 +1167,6 @@ export type OnUpdateBookSubscription = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    bookBlurbId?: string | null,
   } | null,
 };
 
@@ -1730,31 +1181,7 @@ export type OnDeleteBookSubscription = {
     title: string,
     blurb?:  {
       __typename: "Blurb",
-      id: string,
-      book?:  {
-        __typename: "Book",
-        id: string,
-        title: string,
-        blurb?:  {
-          __typename: "Blurb",
-          id: string,
-          content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
-        } | null,
-        parts?:  {
-          __typename: "ModelPartConnection",
-          nextToken?: string | null,
-        } | null,
-        createdAt: string,
-        updatedAt: string,
-        bookBlurbId?: string | null,
-      } | null,
       content: string,
-      createdAt: string,
-      updatedAt: string,
-      blurbBookId?: string | null,
     } | null,
     parts?:  {
       __typename: "ModelPartConnection",
@@ -1769,7 +1196,6 @@ export type OnDeleteBookSubscription = {
           title: string,
           createdAt: string,
           updatedAt: string,
-          bookBlurbId?: string | null,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -1783,163 +1209,6 @@ export type OnDeleteBookSubscription = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    bookBlurbId?: string | null,
-  } | null,
-};
-
-export type OnCreateBlurbSubscriptionVariables = {
-  filter?: ModelSubscriptionBlurbFilterInput | null,
-};
-
-export type OnCreateBlurbSubscription = {
-  onCreateBlurb?:  {
-    __typename: "Blurb",
-    id: string,
-    book?:  {
-      __typename: "Book",
-      id: string,
-      title: string,
-      blurb?:  {
-        __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
-        content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
-      } | null,
-      parts?:  {
-        __typename: "ModelPartConnection",
-        items:  Array< {
-          __typename: "Part",
-          id: string,
-          name: string,
-          order: number,
-          createdAt: string,
-          updatedAt: string,
-          bookPartsId?: string | null,
-        } | null >,
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      bookBlurbId?: string | null,
-    } | null,
-    content: string,
-    createdAt: string,
-    updatedAt: string,
-    blurbBookId?: string | null,
-  } | null,
-};
-
-export type OnUpdateBlurbSubscriptionVariables = {
-  filter?: ModelSubscriptionBlurbFilterInput | null,
-};
-
-export type OnUpdateBlurbSubscription = {
-  onUpdateBlurb?:  {
-    __typename: "Blurb",
-    id: string,
-    book?:  {
-      __typename: "Book",
-      id: string,
-      title: string,
-      blurb?:  {
-        __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
-        content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
-      } | null,
-      parts?:  {
-        __typename: "ModelPartConnection",
-        items:  Array< {
-          __typename: "Part",
-          id: string,
-          name: string,
-          order: number,
-          createdAt: string,
-          updatedAt: string,
-          bookPartsId?: string | null,
-        } | null >,
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      bookBlurbId?: string | null,
-    } | null,
-    content: string,
-    createdAt: string,
-    updatedAt: string,
-    blurbBookId?: string | null,
-  } | null,
-};
-
-export type OnDeleteBlurbSubscriptionVariables = {
-  filter?: ModelSubscriptionBlurbFilterInput | null,
-};
-
-export type OnDeleteBlurbSubscription = {
-  onDeleteBlurb?:  {
-    __typename: "Blurb",
-    id: string,
-    book?:  {
-      __typename: "Book",
-      id: string,
-      title: string,
-      blurb?:  {
-        __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
-        content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
-      } | null,
-      parts?:  {
-        __typename: "ModelPartConnection",
-        items:  Array< {
-          __typename: "Part",
-          id: string,
-          name: string,
-          order: number,
-          createdAt: string,
-          updatedAt: string,
-          bookPartsId?: string | null,
-        } | null >,
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      bookBlurbId?: string | null,
-    } | null,
-    content: string,
-    createdAt: string,
-    updatedAt: string,
-    blurbBookId?: string | null,
   } | null,
 };
 
@@ -1959,19 +1228,7 @@ export type OnCreatePartSubscription = {
       title: string,
       blurb?:  {
         __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
         content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
       } | null,
       parts?:  {
         __typename: "ModelPartConnection",
@@ -1988,7 +1245,6 @@ export type OnCreatePartSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      bookBlurbId?: string | null,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -2035,19 +1291,7 @@ export type OnUpdatePartSubscription = {
       title: string,
       blurb?:  {
         __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
         content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
       } | null,
       parts?:  {
         __typename: "ModelPartConnection",
@@ -2064,7 +1308,6 @@ export type OnUpdatePartSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      bookBlurbId?: string | null,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -2111,19 +1354,7 @@ export type OnDeletePartSubscription = {
       title: string,
       blurb?:  {
         __typename: "Blurb",
-        id: string,
-        book?:  {
-          __typename: "Book",
-          id: string,
-          title: string,
-          createdAt: string,
-          updatedAt: string,
-          bookBlurbId?: string | null,
-        } | null,
         content: string,
-        createdAt: string,
-        updatedAt: string,
-        blurbBookId?: string | null,
       } | null,
       parts?:  {
         __typename: "ModelPartConnection",
@@ -2140,7 +1371,6 @@ export type OnDeletePartSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      bookBlurbId?: string | null,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -2192,11 +1422,7 @@ export type OnCreateChapterSubscription = {
         title: string,
         blurb?:  {
           __typename: "Blurb",
-          id: string,
           content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
         } | null,
         parts?:  {
           __typename: "ModelPartConnection",
@@ -2204,7 +1430,6 @@ export type OnCreateChapterSubscription = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        bookBlurbId?: string | null,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -2252,11 +1477,7 @@ export type OnUpdateChapterSubscription = {
         title: string,
         blurb?:  {
           __typename: "Blurb",
-          id: string,
           content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
         } | null,
         parts?:  {
           __typename: "ModelPartConnection",
@@ -2264,7 +1485,6 @@ export type OnUpdateChapterSubscription = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        bookBlurbId?: string | null,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -2312,11 +1532,7 @@ export type OnDeleteChapterSubscription = {
         title: string,
         blurb?:  {
           __typename: "Blurb",
-          id: string,
           content: string,
-          createdAt: string,
-          updatedAt: string,
-          blurbBookId?: string | null,
         } | null,
         parts?:  {
           __typename: "ModelPartConnection",
@@ -2324,7 +1540,6 @@ export type OnDeleteChapterSubscription = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        bookBlurbId?: string | null,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",

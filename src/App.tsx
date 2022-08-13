@@ -12,6 +12,8 @@ function App() {
                   <Route path={`/`} element={<Page.Layout />}>
                       <Route index element={<Page.Home />} />
                       <Route path={`/login`} element={<Page.Login />} />
+                      <Route path={`/upload`} element={<Page.Manage />} />
+                      <Route path={`/create`} element={<Page.New />} />
                   </Route>
               </Routes>
           </Router>

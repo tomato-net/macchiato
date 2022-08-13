@@ -11,28 +11,7 @@ export const createBook = /* GraphQL */ `
       id
       title
       blurb {
-        id
-        book {
-          id
-          title
-          blurb {
-            id
-            content
-            createdAt
-            updatedAt
-            blurbBookId
-          }
-          parts {
-            nextToken
-          }
-          createdAt
-          updatedAt
-          bookBlurbId
-        }
         content
-        createdAt
-        updatedAt
-        blurbBookId
       }
       parts {
         items {
@@ -44,7 +23,6 @@ export const createBook = /* GraphQL */ `
             title
             createdAt
             updatedAt
-            bookBlurbId
           }
           chapters {
             nextToken
@@ -57,7 +35,6 @@ export const createBook = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      bookBlurbId
     }
   }
 `;
@@ -70,28 +47,7 @@ export const updateBook = /* GraphQL */ `
       id
       title
       blurb {
-        id
-        book {
-          id
-          title
-          blurb {
-            id
-            content
-            createdAt
-            updatedAt
-            blurbBookId
-          }
-          parts {
-            nextToken
-          }
-          createdAt
-          updatedAt
-          bookBlurbId
-        }
         content
-        createdAt
-        updatedAt
-        blurbBookId
       }
       parts {
         items {
@@ -103,7 +59,6 @@ export const updateBook = /* GraphQL */ `
             title
             createdAt
             updatedAt
-            bookBlurbId
           }
           chapters {
             nextToken
@@ -116,7 +71,6 @@ export const updateBook = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      bookBlurbId
     }
   }
 `;
@@ -129,28 +83,7 @@ export const deleteBook = /* GraphQL */ `
       id
       title
       blurb {
-        id
-        book {
-          id
-          title
-          blurb {
-            id
-            content
-            createdAt
-            updatedAt
-            blurbBookId
-          }
-          parts {
-            nextToken
-          }
-          createdAt
-          updatedAt
-          bookBlurbId
-        }
         content
-        createdAt
-        updatedAt
-        blurbBookId
       }
       parts {
         items {
@@ -162,7 +95,6 @@ export const deleteBook = /* GraphQL */ `
             title
             createdAt
             updatedAt
-            bookBlurbId
           }
           chapters {
             nextToken
@@ -175,145 +107,6 @@ export const deleteBook = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      bookBlurbId
-    }
-  }
-`;
-export const createBlurb = /* GraphQL */ `
-  mutation CreateBlurb(
-    $input: CreateBlurbInput!
-    $condition: ModelBlurbConditionInput
-  ) {
-    createBlurb(input: $input, condition: $condition) {
-      id
-      book {
-        id
-        title
-        blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
-          content
-          createdAt
-          updatedAt
-          blurbBookId
-        }
-        parts {
-          items {
-            id
-            name
-            order
-            createdAt
-            updatedAt
-            bookPartsId
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-        bookBlurbId
-      }
-      content
-      createdAt
-      updatedAt
-      blurbBookId
-    }
-  }
-`;
-export const updateBlurb = /* GraphQL */ `
-  mutation UpdateBlurb(
-    $input: UpdateBlurbInput!
-    $condition: ModelBlurbConditionInput
-  ) {
-    updateBlurb(input: $input, condition: $condition) {
-      id
-      book {
-        id
-        title
-        blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
-          content
-          createdAt
-          updatedAt
-          blurbBookId
-        }
-        parts {
-          items {
-            id
-            name
-            order
-            createdAt
-            updatedAt
-            bookPartsId
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-        bookBlurbId
-      }
-      content
-      createdAt
-      updatedAt
-      blurbBookId
-    }
-  }
-`;
-export const deleteBlurb = /* GraphQL */ `
-  mutation DeleteBlurb(
-    $input: DeleteBlurbInput!
-    $condition: ModelBlurbConditionInput
-  ) {
-    deleteBlurb(input: $input, condition: $condition) {
-      id
-      book {
-        id
-        title
-        blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
-          content
-          createdAt
-          updatedAt
-          blurbBookId
-        }
-        parts {
-          items {
-            id
-            name
-            order
-            createdAt
-            updatedAt
-            bookPartsId
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-        bookBlurbId
-      }
-      content
-      createdAt
-      updatedAt
-      blurbBookId
     }
   }
 `;
@@ -330,18 +123,7 @@ export const createPart = /* GraphQL */ `
         id
         title
         blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
           content
-          createdAt
-          updatedAt
-          blurbBookId
         }
         parts {
           items {
@@ -356,7 +138,6 @@ export const createPart = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        bookBlurbId
       }
       chapters {
         items {
@@ -397,18 +178,7 @@ export const updatePart = /* GraphQL */ `
         id
         title
         blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
           content
-          createdAt
-          updatedAt
-          blurbBookId
         }
         parts {
           items {
@@ -423,7 +193,6 @@ export const updatePart = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        bookBlurbId
       }
       chapters {
         items {
@@ -464,18 +233,7 @@ export const deletePart = /* GraphQL */ `
         id
         title
         blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
           content
-          createdAt
-          updatedAt
-          blurbBookId
         }
         parts {
           items {
@@ -490,7 +248,6 @@ export const deletePart = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        bookBlurbId
       }
       chapters {
         items {
@@ -535,18 +292,13 @@ export const createChapter = /* GraphQL */ `
           id
           title
           blurb {
-            id
             content
-            createdAt
-            updatedAt
-            blurbBookId
           }
           parts {
             nextToken
           }
           createdAt
           updatedAt
-          bookBlurbId
         }
         chapters {
           items {
@@ -588,18 +340,13 @@ export const updateChapter = /* GraphQL */ `
           id
           title
           blurb {
-            id
             content
-            createdAt
-            updatedAt
-            blurbBookId
           }
           parts {
             nextToken
           }
           createdAt
           updatedAt
-          bookBlurbId
         }
         chapters {
           items {
@@ -641,18 +388,13 @@ export const deleteChapter = /* GraphQL */ `
           id
           title
           blurb {
-            id
             content
-            createdAt
-            updatedAt
-            blurbBookId
           }
           parts {
             nextToken
           }
           createdAt
           updatedAt
-          bookBlurbId
         }
         chapters {
           items {

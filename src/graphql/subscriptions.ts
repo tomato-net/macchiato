@@ -8,28 +8,7 @@ export const onCreateBook = /* GraphQL */ `
       id
       title
       blurb {
-        id
-        book {
-          id
-          title
-          blurb {
-            id
-            content
-            createdAt
-            updatedAt
-            blurbBookId
-          }
-          parts {
-            nextToken
-          }
-          createdAt
-          updatedAt
-          bookBlurbId
-        }
         content
-        createdAt
-        updatedAt
-        blurbBookId
       }
       parts {
         items {
@@ -41,7 +20,6 @@ export const onCreateBook = /* GraphQL */ `
             title
             createdAt
             updatedAt
-            bookBlurbId
           }
           chapters {
             nextToken
@@ -54,7 +32,6 @@ export const onCreateBook = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      bookBlurbId
     }
   }
 `;
@@ -64,28 +41,7 @@ export const onUpdateBook = /* GraphQL */ `
       id
       title
       blurb {
-        id
-        book {
-          id
-          title
-          blurb {
-            id
-            content
-            createdAt
-            updatedAt
-            blurbBookId
-          }
-          parts {
-            nextToken
-          }
-          createdAt
-          updatedAt
-          bookBlurbId
-        }
         content
-        createdAt
-        updatedAt
-        blurbBookId
       }
       parts {
         items {
@@ -97,7 +53,6 @@ export const onUpdateBook = /* GraphQL */ `
             title
             createdAt
             updatedAt
-            bookBlurbId
           }
           chapters {
             nextToken
@@ -110,7 +65,6 @@ export const onUpdateBook = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      bookBlurbId
     }
   }
 `;
@@ -120,28 +74,7 @@ export const onDeleteBook = /* GraphQL */ `
       id
       title
       blurb {
-        id
-        book {
-          id
-          title
-          blurb {
-            id
-            content
-            createdAt
-            updatedAt
-            blurbBookId
-          }
-          parts {
-            nextToken
-          }
-          createdAt
-          updatedAt
-          bookBlurbId
-        }
         content
-        createdAt
-        updatedAt
-        blurbBookId
       }
       parts {
         items {
@@ -153,7 +86,6 @@ export const onDeleteBook = /* GraphQL */ `
             title
             createdAt
             updatedAt
-            bookBlurbId
           }
           chapters {
             nextToken
@@ -166,136 +98,6 @@ export const onDeleteBook = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      bookBlurbId
-    }
-  }
-`;
-export const onCreateBlurb = /* GraphQL */ `
-  subscription OnCreateBlurb($filter: ModelSubscriptionBlurbFilterInput) {
-    onCreateBlurb(filter: $filter) {
-      id
-      book {
-        id
-        title
-        blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
-          content
-          createdAt
-          updatedAt
-          blurbBookId
-        }
-        parts {
-          items {
-            id
-            name
-            order
-            createdAt
-            updatedAt
-            bookPartsId
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-        bookBlurbId
-      }
-      content
-      createdAt
-      updatedAt
-      blurbBookId
-    }
-  }
-`;
-export const onUpdateBlurb = /* GraphQL */ `
-  subscription OnUpdateBlurb($filter: ModelSubscriptionBlurbFilterInput) {
-    onUpdateBlurb(filter: $filter) {
-      id
-      book {
-        id
-        title
-        blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
-          content
-          createdAt
-          updatedAt
-          blurbBookId
-        }
-        parts {
-          items {
-            id
-            name
-            order
-            createdAt
-            updatedAt
-            bookPartsId
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-        bookBlurbId
-      }
-      content
-      createdAt
-      updatedAt
-      blurbBookId
-    }
-  }
-`;
-export const onDeleteBlurb = /* GraphQL */ `
-  subscription OnDeleteBlurb($filter: ModelSubscriptionBlurbFilterInput) {
-    onDeleteBlurb(filter: $filter) {
-      id
-      book {
-        id
-        title
-        blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
-          content
-          createdAt
-          updatedAt
-          blurbBookId
-        }
-        parts {
-          items {
-            id
-            name
-            order
-            createdAt
-            updatedAt
-            bookPartsId
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-        bookBlurbId
-      }
-      content
-      createdAt
-      updatedAt
-      blurbBookId
     }
   }
 `;
@@ -309,18 +111,7 @@ export const onCreatePart = /* GraphQL */ `
         id
         title
         blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
           content
-          createdAt
-          updatedAt
-          blurbBookId
         }
         parts {
           items {
@@ -335,7 +126,6 @@ export const onCreatePart = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        bookBlurbId
       }
       chapters {
         items {
@@ -373,18 +163,7 @@ export const onUpdatePart = /* GraphQL */ `
         id
         title
         blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
           content
-          createdAt
-          updatedAt
-          blurbBookId
         }
         parts {
           items {
@@ -399,7 +178,6 @@ export const onUpdatePart = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        bookBlurbId
       }
       chapters {
         items {
@@ -437,18 +215,7 @@ export const onDeletePart = /* GraphQL */ `
         id
         title
         blurb {
-          id
-          book {
-            id
-            title
-            createdAt
-            updatedAt
-            bookBlurbId
-          }
           content
-          createdAt
-          updatedAt
-          blurbBookId
         }
         parts {
           items {
@@ -463,7 +230,6 @@ export const onDeletePart = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        bookBlurbId
       }
       chapters {
         items {
@@ -505,18 +271,13 @@ export const onCreateChapter = /* GraphQL */ `
           id
           title
           blurb {
-            id
             content
-            createdAt
-            updatedAt
-            blurbBookId
           }
           parts {
             nextToken
           }
           createdAt
           updatedAt
-          bookBlurbId
         }
         chapters {
           items {
@@ -555,18 +316,13 @@ export const onUpdateChapter = /* GraphQL */ `
           id
           title
           blurb {
-            id
             content
-            createdAt
-            updatedAt
-            blurbBookId
           }
           parts {
             nextToken
           }
           createdAt
           updatedAt
-          bookBlurbId
         }
         chapters {
           items {
@@ -605,18 +361,13 @@ export const onDeleteChapter = /* GraphQL */ `
           id
           title
           blurb {
-            id
             content
-            createdAt
-            updatedAt
-            blurbBookId
           }
           parts {
             nextToken
           }
           createdAt
           updatedAt
-          bookBlurbId
         }
         chapters {
           items {
