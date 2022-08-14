@@ -13,6 +13,71 @@ export const createBook = /* GraphQL */ `
       blurb {
         content
       }
+      author {
+        id
+        name
+        books {
+          items {
+            id
+            title
+            createdAt
+            updatedAt
+            seriesBooksId
+            authorBooksId
+            bookAuthorId
+            bookSeriesId
+          }
+          nextToken
+        }
+        series {
+          items {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      series {
+        id
+        name
+        description
+        author {
+          id
+          name
+          books {
+            nextToken
+          }
+          series {
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        books {
+          items {
+            id
+            title
+            createdAt
+            updatedAt
+            seriesBooksId
+            authorBooksId
+            bookAuthorId
+            bookSeriesId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        authorSeriesId
+        seriesAuthorId
+      }
       parts {
         items {
           id
@@ -23,6 +88,10 @@ export const createBook = /* GraphQL */ `
             title
             createdAt
             updatedAt
+            seriesBooksId
+            authorBooksId
+            bookAuthorId
+            bookSeriesId
           }
           chapters {
             nextToken
@@ -35,6 +104,10 @@ export const createBook = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      seriesBooksId
+      authorBooksId
+      bookAuthorId
+      bookSeriesId
     }
   }
 `;
@@ -49,6 +122,71 @@ export const updateBook = /* GraphQL */ `
       blurb {
         content
       }
+      author {
+        id
+        name
+        books {
+          items {
+            id
+            title
+            createdAt
+            updatedAt
+            seriesBooksId
+            authorBooksId
+            bookAuthorId
+            bookSeriesId
+          }
+          nextToken
+        }
+        series {
+          items {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      series {
+        id
+        name
+        description
+        author {
+          id
+          name
+          books {
+            nextToken
+          }
+          series {
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        books {
+          items {
+            id
+            title
+            createdAt
+            updatedAt
+            seriesBooksId
+            authorBooksId
+            bookAuthorId
+            bookSeriesId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        authorSeriesId
+        seriesAuthorId
+      }
       parts {
         items {
           id
@@ -59,6 +197,10 @@ export const updateBook = /* GraphQL */ `
             title
             createdAt
             updatedAt
+            seriesBooksId
+            authorBooksId
+            bookAuthorId
+            bookSeriesId
           }
           chapters {
             nextToken
@@ -71,6 +213,10 @@ export const updateBook = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      seriesBooksId
+      authorBooksId
+      bookAuthorId
+      bookSeriesId
     }
   }
 `;
@@ -85,6 +231,71 @@ export const deleteBook = /* GraphQL */ `
       blurb {
         content
       }
+      author {
+        id
+        name
+        books {
+          items {
+            id
+            title
+            createdAt
+            updatedAt
+            seriesBooksId
+            authorBooksId
+            bookAuthorId
+            bookSeriesId
+          }
+          nextToken
+        }
+        series {
+          items {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      series {
+        id
+        name
+        description
+        author {
+          id
+          name
+          books {
+            nextToken
+          }
+          series {
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        books {
+          items {
+            id
+            title
+            createdAt
+            updatedAt
+            seriesBooksId
+            authorBooksId
+            bookAuthorId
+            bookSeriesId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        authorSeriesId
+        seriesAuthorId
+      }
       parts {
         items {
           id
@@ -95,6 +306,10 @@ export const deleteBook = /* GraphQL */ `
             title
             createdAt
             updatedAt
+            seriesBooksId
+            authorBooksId
+            bookAuthorId
+            bookSeriesId
           }
           chapters {
             nextToken
@@ -102,6 +317,457 @@ export const deleteBook = /* GraphQL */ `
           createdAt
           updatedAt
           bookPartsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      seriesBooksId
+      authorBooksId
+      bookAuthorId
+      bookSeriesId
+    }
+  }
+`;
+export const createSeries = /* GraphQL */ `
+  mutation CreateSeries(
+    $input: CreateSeriesInput!
+    $condition: ModelSeriesConditionInput
+  ) {
+    createSeries(input: $input, condition: $condition) {
+      id
+      name
+      description
+      author {
+        id
+        name
+        books {
+          items {
+            id
+            title
+            createdAt
+            updatedAt
+            seriesBooksId
+            authorBooksId
+            bookAuthorId
+            bookSeriesId
+          }
+          nextToken
+        }
+        series {
+          items {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      books {
+        items {
+          id
+          title
+          blurb {
+            content
+          }
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          series {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
+          parts {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          seriesBooksId
+          authorBooksId
+          bookAuthorId
+          bookSeriesId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      authorSeriesId
+      seriesAuthorId
+    }
+  }
+`;
+export const updateSeries = /* GraphQL */ `
+  mutation UpdateSeries(
+    $input: UpdateSeriesInput!
+    $condition: ModelSeriesConditionInput
+  ) {
+    updateSeries(input: $input, condition: $condition) {
+      id
+      name
+      description
+      author {
+        id
+        name
+        books {
+          items {
+            id
+            title
+            createdAt
+            updatedAt
+            seriesBooksId
+            authorBooksId
+            bookAuthorId
+            bookSeriesId
+          }
+          nextToken
+        }
+        series {
+          items {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      books {
+        items {
+          id
+          title
+          blurb {
+            content
+          }
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          series {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
+          parts {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          seriesBooksId
+          authorBooksId
+          bookAuthorId
+          bookSeriesId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      authorSeriesId
+      seriesAuthorId
+    }
+  }
+`;
+export const deleteSeries = /* GraphQL */ `
+  mutation DeleteSeries(
+    $input: DeleteSeriesInput!
+    $condition: ModelSeriesConditionInput
+  ) {
+    deleteSeries(input: $input, condition: $condition) {
+      id
+      name
+      description
+      author {
+        id
+        name
+        books {
+          items {
+            id
+            title
+            createdAt
+            updatedAt
+            seriesBooksId
+            authorBooksId
+            bookAuthorId
+            bookSeriesId
+          }
+          nextToken
+        }
+        series {
+          items {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      books {
+        items {
+          id
+          title
+          blurb {
+            content
+          }
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          series {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
+          parts {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          seriesBooksId
+          authorBooksId
+          bookAuthorId
+          bookSeriesId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      authorSeriesId
+      seriesAuthorId
+    }
+  }
+`;
+export const createAuthor = /* GraphQL */ `
+  mutation CreateAuthor(
+    $input: CreateAuthorInput!
+    $condition: ModelAuthorConditionInput
+  ) {
+    createAuthor(input: $input, condition: $condition) {
+      id
+      name
+      books {
+        items {
+          id
+          title
+          blurb {
+            content
+          }
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          series {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
+          parts {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          seriesBooksId
+          authorBooksId
+          bookAuthorId
+          bookSeriesId
+        }
+        nextToken
+      }
+      series {
+        items {
+          id
+          name
+          description
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          books {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          authorSeriesId
+          seriesAuthorId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateAuthor = /* GraphQL */ `
+  mutation UpdateAuthor(
+    $input: UpdateAuthorInput!
+    $condition: ModelAuthorConditionInput
+  ) {
+    updateAuthor(input: $input, condition: $condition) {
+      id
+      name
+      books {
+        items {
+          id
+          title
+          blurb {
+            content
+          }
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          series {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
+          parts {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          seriesBooksId
+          authorBooksId
+          bookAuthorId
+          bookSeriesId
+        }
+        nextToken
+      }
+      series {
+        items {
+          id
+          name
+          description
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          books {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          authorSeriesId
+          seriesAuthorId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteAuthor = /* GraphQL */ `
+  mutation DeleteAuthor(
+    $input: DeleteAuthorInput!
+    $condition: ModelAuthorConditionInput
+  ) {
+    deleteAuthor(input: $input, condition: $condition) {
+      id
+      name
+      books {
+        items {
+          id
+          title
+          blurb {
+            content
+          }
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          series {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
+          parts {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          seriesBooksId
+          authorBooksId
+          bookAuthorId
+          bookSeriesId
+        }
+        nextToken
+      }
+      series {
+        items {
+          id
+          name
+          description
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          books {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          authorSeriesId
+          seriesAuthorId
         }
         nextToken
       }
@@ -125,6 +791,36 @@ export const createPart = /* GraphQL */ `
         blurb {
           content
         }
+        author {
+          id
+          name
+          books {
+            nextToken
+          }
+          series {
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        series {
+          id
+          name
+          description
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          books {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          authorSeriesId
+          seriesAuthorId
+        }
         parts {
           items {
             id
@@ -138,6 +834,10 @@ export const createPart = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        seriesBooksId
+        authorBooksId
+        bookAuthorId
+        bookSeriesId
       }
       chapters {
         items {
@@ -180,6 +880,36 @@ export const updatePart = /* GraphQL */ `
         blurb {
           content
         }
+        author {
+          id
+          name
+          books {
+            nextToken
+          }
+          series {
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        series {
+          id
+          name
+          description
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          books {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          authorSeriesId
+          seriesAuthorId
+        }
         parts {
           items {
             id
@@ -193,6 +923,10 @@ export const updatePart = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        seriesBooksId
+        authorBooksId
+        bookAuthorId
+        bookSeriesId
       }
       chapters {
         items {
@@ -235,6 +969,36 @@ export const deletePart = /* GraphQL */ `
         blurb {
           content
         }
+        author {
+          id
+          name
+          books {
+            nextToken
+          }
+          series {
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        series {
+          id
+          name
+          description
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          books {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          authorSeriesId
+          seriesAuthorId
+        }
         parts {
           items {
             id
@@ -248,6 +1012,10 @@ export const deletePart = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        seriesBooksId
+        authorBooksId
+        bookAuthorId
+        bookSeriesId
       }
       chapters {
         items {
@@ -294,11 +1062,30 @@ export const createChapter = /* GraphQL */ `
           blurb {
             content
           }
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          series {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
           parts {
             nextToken
           }
           createdAt
           updatedAt
+          seriesBooksId
+          authorBooksId
+          bookAuthorId
+          bookSeriesId
         }
         chapters {
           items {
@@ -342,11 +1129,30 @@ export const updateChapter = /* GraphQL */ `
           blurb {
             content
           }
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          series {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
           parts {
             nextToken
           }
           createdAt
           updatedAt
+          seriesBooksId
+          authorBooksId
+          bookAuthorId
+          bookSeriesId
         }
         chapters {
           items {
@@ -390,11 +1196,30 @@ export const deleteChapter = /* GraphQL */ `
           blurb {
             content
           }
+          author {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          series {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            authorSeriesId
+            seriesAuthorId
+          }
           parts {
             nextToken
           }
           createdAt
           updatedAt
+          seriesBooksId
+          authorBooksId
+          bookAuthorId
+          bookSeriesId
         }
         chapters {
           items {

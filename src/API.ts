@@ -6,6 +6,10 @@ export type CreateBookInput = {
   id?: string | null,
   title: string,
   blurb?: BlurbInput | null,
+  seriesBooksId?: string | null,
+  authorBooksId?: string | null,
+  bookAuthorId: string,
+  bookSeriesId: string,
 };
 
 export type BlurbInput = {
@@ -17,6 +21,10 @@ export type ModelBookConditionInput = {
   and?: Array< ModelBookConditionInput | null > | null,
   or?: Array< ModelBookConditionInput | null > | null,
   not?: ModelBookConditionInput | null,
+  seriesBooksId?: ModelIDInput | null,
+  authorBooksId?: ModelIDInput | null,
+  bookAuthorId?: ModelIDInput | null,
+  bookSeriesId?: ModelIDInput | null,
 };
 
 export type ModelStringInput = {
@@ -59,19 +67,76 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
 export type Book = {
   __typename: "Book",
   id: string,
   title: string,
   blurb?: Blurb | null,
+  author: Author,
+  series: Series,
   parts?: ModelPartConnection | null,
   createdAt: string,
   updatedAt: string,
+  seriesBooksId?: string | null,
+  authorBooksId?: string | null,
+  bookAuthorId: string,
+  bookSeriesId: string,
 };
 
 export type Blurb = {
   __typename: "Blurb",
   content: string,
+};
+
+export type Author = {
+  __typename: "Author",
+  id: string,
+  name: string,
+  books?: ModelBookConnection | null,
+  series?: ModelSeriesConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelBookConnection = {
+  __typename: "ModelBookConnection",
+  items:  Array<Book | null >,
+  nextToken?: string | null,
+};
+
+export type ModelSeriesConnection = {
+  __typename: "ModelSeriesConnection",
+  items:  Array<Series | null >,
+  nextToken?: string | null,
+};
+
+export type Series = {
+  __typename: "Series",
+  id: string,
+  name: string,
+  description: string,
+  author: Author,
+  books?: ModelBookConnection | null,
+  createdAt: string,
+  updatedAt: string,
+  authorSeriesId?: string | null,
+  seriesAuthorId: string,
 };
 
 export type ModelPartConnection = {
@@ -114,9 +179,64 @@ export type UpdateBookInput = {
   id: string,
   title?: string | null,
   blurb?: BlurbInput | null,
+  seriesBooksId?: string | null,
+  authorBooksId?: string | null,
+  bookAuthorId: string,
+  bookSeriesId: string,
 };
 
 export type DeleteBookInput = {
+  id: string,
+};
+
+export type CreateSeriesInput = {
+  id?: string | null,
+  name: string,
+  description: string,
+  authorSeriesId?: string | null,
+  seriesAuthorId: string,
+};
+
+export type ModelSeriesConditionInput = {
+  name?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelSeriesConditionInput | null > | null,
+  or?: Array< ModelSeriesConditionInput | null > | null,
+  not?: ModelSeriesConditionInput | null,
+  authorSeriesId?: ModelIDInput | null,
+  seriesAuthorId?: ModelIDInput | null,
+};
+
+export type UpdateSeriesInput = {
+  id: string,
+  name?: string | null,
+  description?: string | null,
+  authorSeriesId?: string | null,
+  seriesAuthorId: string,
+};
+
+export type DeleteSeriesInput = {
+  id: string,
+};
+
+export type CreateAuthorInput = {
+  id?: string | null,
+  name: string,
+};
+
+export type ModelAuthorConditionInput = {
+  name?: ModelStringInput | null,
+  and?: Array< ModelAuthorConditionInput | null > | null,
+  or?: Array< ModelAuthorConditionInput | null > | null,
+  not?: ModelAuthorConditionInput | null,
+};
+
+export type UpdateAuthorInput = {
+  id: string,
+  name?: string | null,
+};
+
+export type DeleteAuthorInput = {
   id: string,
 };
 
@@ -146,22 +266,6 @@ export type ModelIntInput = {
   between?: Array< number | null > | null,
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
-};
-
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
 };
 
 export type UpdatePartInput = {
@@ -211,11 +315,34 @@ export type ModelBookFilterInput = {
   and?: Array< ModelBookFilterInput | null > | null,
   or?: Array< ModelBookFilterInput | null > | null,
   not?: ModelBookFilterInput | null,
+  seriesBooksId?: ModelIDInput | null,
+  authorBooksId?: ModelIDInput | null,
+  bookAuthorId?: ModelIDInput | null,
+  bookSeriesId?: ModelIDInput | null,
 };
 
-export type ModelBookConnection = {
-  __typename: "ModelBookConnection",
-  items:  Array<Book | null >,
+export type ModelSeriesFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelSeriesFilterInput | null > | null,
+  or?: Array< ModelSeriesFilterInput | null > | null,
+  not?: ModelSeriesFilterInput | null,
+  authorSeriesId?: ModelIDInput | null,
+  seriesAuthorId?: ModelIDInput | null,
+};
+
+export type ModelAuthorFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  and?: Array< ModelAuthorFilterInput | null > | null,
+  or?: Array< ModelAuthorFilterInput | null > | null,
+  not?: ModelAuthorFilterInput | null,
+};
+
+export type ModelAuthorConnection = {
+  __typename: "ModelAuthorConnection",
+  items:  Array<Author | null >,
   nextToken?: string | null,
 };
 
@@ -277,6 +404,21 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
+export type ModelSubscriptionSeriesFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  description?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionSeriesFilterInput | null > | null,
+  or?: Array< ModelSubscriptionSeriesFilterInput | null > | null,
+};
+
+export type ModelSubscriptionAuthorFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionAuthorFilterInput | null > | null,
+  or?: Array< ModelSubscriptionAuthorFilterInput | null > | null,
+};
+
 export type ModelSubscriptionPartFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
@@ -320,6 +462,82 @@ export type CreateBookMutation = {
       __typename: "Blurb",
       content: string,
     } | null,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    series:  {
+      __typename: "Series",
+      id: string,
+      name: string,
+      description: string,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      authorSeriesId?: string | null,
+      seriesAuthorId: string,
+    },
     parts?:  {
       __typename: "ModelPartConnection",
       items:  Array< {
@@ -333,6 +551,10 @@ export type CreateBookMutation = {
           title: string,
           createdAt: string,
           updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -346,6 +568,10 @@ export type CreateBookMutation = {
     } | null,
     createdAt: string,
     updatedAt: string,
+    seriesBooksId?: string | null,
+    authorBooksId?: string | null,
+    bookAuthorId: string,
+    bookSeriesId: string,
   } | null,
 };
 
@@ -363,6 +589,82 @@ export type UpdateBookMutation = {
       __typename: "Blurb",
       content: string,
     } | null,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    series:  {
+      __typename: "Series",
+      id: string,
+      name: string,
+      description: string,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      authorSeriesId?: string | null,
+      seriesAuthorId: string,
+    },
     parts?:  {
       __typename: "ModelPartConnection",
       items:  Array< {
@@ -376,6 +678,10 @@ export type UpdateBookMutation = {
           title: string,
           createdAt: string,
           updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -389,6 +695,10 @@ export type UpdateBookMutation = {
     } | null,
     createdAt: string,
     updatedAt: string,
+    seriesBooksId?: string | null,
+    authorBooksId?: string | null,
+    bookAuthorId: string,
+    bookSeriesId: string,
   } | null,
 };
 
@@ -406,6 +716,82 @@ export type DeleteBookMutation = {
       __typename: "Blurb",
       content: string,
     } | null,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    series:  {
+      __typename: "Series",
+      id: string,
+      name: string,
+      description: string,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      authorSeriesId?: string | null,
+      seriesAuthorId: string,
+    },
     parts?:  {
       __typename: "ModelPartConnection",
       items:  Array< {
@@ -419,6 +805,10 @@ export type DeleteBookMutation = {
           title: string,
           createdAt: string,
           updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -427,6 +817,532 @@ export type DeleteBookMutation = {
         createdAt: string,
         updatedAt: string,
         bookPartsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    seriesBooksId?: string | null,
+    authorBooksId?: string | null,
+    bookAuthorId: string,
+    bookSeriesId: string,
+  } | null,
+};
+
+export type CreateSeriesMutationVariables = {
+  input: CreateSeriesInput,
+  condition?: ModelSeriesConditionInput | null,
+};
+
+export type CreateSeriesMutation = {
+  createSeries?:  {
+    __typename: "Series",
+    id: string,
+    name: string,
+    description: string,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    authorSeriesId?: string | null,
+    seriesAuthorId: string,
+  } | null,
+};
+
+export type UpdateSeriesMutationVariables = {
+  input: UpdateSeriesInput,
+  condition?: ModelSeriesConditionInput | null,
+};
+
+export type UpdateSeriesMutation = {
+  updateSeries?:  {
+    __typename: "Series",
+    id: string,
+    name: string,
+    description: string,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    authorSeriesId?: string | null,
+    seriesAuthorId: string,
+  } | null,
+};
+
+export type DeleteSeriesMutationVariables = {
+  input: DeleteSeriesInput,
+  condition?: ModelSeriesConditionInput | null,
+};
+
+export type DeleteSeriesMutation = {
+  deleteSeries?:  {
+    __typename: "Series",
+    id: string,
+    name: string,
+    description: string,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    authorSeriesId?: string | null,
+    seriesAuthorId: string,
+  } | null,
+};
+
+export type CreateAuthorMutationVariables = {
+  input: CreateAuthorInput,
+  condition?: ModelAuthorConditionInput | null,
+};
+
+export type CreateAuthorMutation = {
+  createAuthor?:  {
+    __typename: "Author",
+    id: string,
+    name: string,
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    series?:  {
+      __typename: "ModelSeriesConnection",
+      items:  Array< {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateAuthorMutationVariables = {
+  input: UpdateAuthorInput,
+  condition?: ModelAuthorConditionInput | null,
+};
+
+export type UpdateAuthorMutation = {
+  updateAuthor?:  {
+    __typename: "Author",
+    id: string,
+    name: string,
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    series?:  {
+      __typename: "ModelSeriesConnection",
+      items:  Array< {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteAuthorMutationVariables = {
+  input: DeleteAuthorInput,
+  condition?: ModelAuthorConditionInput | null,
+};
+
+export type DeleteAuthorMutation = {
+  deleteAuthor?:  {
+    __typename: "Author",
+    id: string,
+    name: string,
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    series?:  {
+      __typename: "ModelSeriesConnection",
+      items:  Array< {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -454,6 +1370,42 @@ export type CreatePartMutation = {
         __typename: "Blurb",
         content: string,
       } | null,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      series:  {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
+      },
       parts?:  {
         __typename: "ModelPartConnection",
         items:  Array< {
@@ -469,6 +1421,10 @@ export type CreatePartMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
+      seriesBooksId?: string | null,
+      authorBooksId?: string | null,
+      bookAuthorId: string,
+      bookSeriesId: string,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -518,6 +1474,42 @@ export type UpdatePartMutation = {
         __typename: "Blurb",
         content: string,
       } | null,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      series:  {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
+      },
       parts?:  {
         __typename: "ModelPartConnection",
         items:  Array< {
@@ -533,6 +1525,10 @@ export type UpdatePartMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
+      seriesBooksId?: string | null,
+      authorBooksId?: string | null,
+      bookAuthorId: string,
+      bookSeriesId: string,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -582,6 +1578,42 @@ export type DeletePartMutation = {
         __typename: "Blurb",
         content: string,
       } | null,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      series:  {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
+      },
       parts?:  {
         __typename: "ModelPartConnection",
         items:  Array< {
@@ -597,6 +1629,10 @@ export type DeletePartMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
+      seriesBooksId?: string | null,
+      authorBooksId?: string | null,
+      bookAuthorId: string,
+      bookSeriesId: string,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -651,12 +1687,33 @@ export type CreateChapterMutation = {
           __typename: "Blurb",
           content: string,
         } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
         parts?:  {
           __typename: "ModelPartConnection",
           nextToken?: string | null,
         } | null,
         createdAt: string,
         updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -707,12 +1764,33 @@ export type UpdateChapterMutation = {
           __typename: "Blurb",
           content: string,
         } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
         parts?:  {
           __typename: "ModelPartConnection",
           nextToken?: string | null,
         } | null,
         createdAt: string,
         updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -763,12 +1841,33 @@ export type DeleteChapterMutation = {
           __typename: "Blurb",
           content: string,
         } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
         parts?:  {
           __typename: "ModelPartConnection",
           nextToken?: string | null,
         } | null,
         createdAt: string,
         updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -808,6 +1907,82 @@ export type GetBookQuery = {
       __typename: "Blurb",
       content: string,
     } | null,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    series:  {
+      __typename: "Series",
+      id: string,
+      name: string,
+      description: string,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      authorSeriesId?: string | null,
+      seriesAuthorId: string,
+    },
     parts?:  {
       __typename: "ModelPartConnection",
       items:  Array< {
@@ -821,6 +1996,10 @@ export type GetBookQuery = {
           title: string,
           createdAt: string,
           updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -834,6 +2013,10 @@ export type GetBookQuery = {
     } | null,
     createdAt: string,
     updatedAt: string,
+    seriesBooksId?: string | null,
+    authorBooksId?: string | null,
+    bookAuthorId: string,
+    bookSeriesId: string,
   } | null,
 };
 
@@ -854,6 +2037,42 @@ export type ListBooksQuery = {
         __typename: "Blurb",
         content: string,
       } | null,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      series:  {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
+      },
       parts?:  {
         __typename: "ModelPartConnection",
         items:  Array< {
@@ -864,6 +2083,284 @@ export type ListBooksQuery = {
           createdAt: string,
           updatedAt: string,
           bookPartsId?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      seriesBooksId?: string | null,
+      authorBooksId?: string | null,
+      bookAuthorId: string,
+      bookSeriesId: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetSeriesQueryVariables = {
+  id: string,
+};
+
+export type GetSeriesQuery = {
+  getSeries?:  {
+    __typename: "Series",
+    id: string,
+    name: string,
+    description: string,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    authorSeriesId?: string | null,
+    seriesAuthorId: string,
+  } | null,
+};
+
+export type ListSeriesQueryVariables = {
+  filter?: ModelSeriesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListSeriesQuery = {
+  listSeries?:  {
+    __typename: "ModelSeriesConnection",
+    items:  Array< {
+      __typename: "Series",
+      id: string,
+      name: string,
+      description: string,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      authorSeriesId?: string | null,
+      seriesAuthorId: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetAuthorQueryVariables = {
+  id: string,
+};
+
+export type GetAuthorQuery = {
+  getAuthor?:  {
+    __typename: "Author",
+    id: string,
+    name: string,
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    series?:  {
+      __typename: "ModelSeriesConnection",
+      items:  Array< {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListAuthorsQueryVariables = {
+  filter?: ModelAuthorFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListAuthorsQuery = {
+  listAuthors?:  {
+    __typename: "ModelAuthorConnection",
+    items:  Array< {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
         } | null >,
         nextToken?: string | null,
       } | null,
@@ -892,6 +2389,42 @@ export type GetPartQuery = {
         __typename: "Blurb",
         content: string,
       } | null,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      series:  {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
+      },
       parts?:  {
         __typename: "ModelPartConnection",
         items:  Array< {
@@ -907,6 +2440,10 @@ export type GetPartQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
+      seriesBooksId?: string | null,
+      authorBooksId?: string | null,
+      bookAuthorId: string,
+      bookSeriesId: string,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -959,12 +2496,33 @@ export type ListPartsQuery = {
           __typename: "Blurb",
           content: string,
         } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
         parts?:  {
           __typename: "ModelPartConnection",
           nextToken?: string | null,
         } | null,
         createdAt: string,
         updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -1011,12 +2569,33 @@ export type GetChapterQuery = {
           __typename: "Blurb",
           content: string,
         } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
         parts?:  {
           __typename: "ModelPartConnection",
           nextToken?: string | null,
         } | null,
         createdAt: string,
         updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -1068,6 +2647,10 @@ export type ListChaptersQuery = {
           title: string,
           createdAt: string,
           updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -1099,6 +2682,82 @@ export type OnCreateBookSubscription = {
       __typename: "Blurb",
       content: string,
     } | null,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    series:  {
+      __typename: "Series",
+      id: string,
+      name: string,
+      description: string,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      authorSeriesId?: string | null,
+      seriesAuthorId: string,
+    },
     parts?:  {
       __typename: "ModelPartConnection",
       items:  Array< {
@@ -1112,6 +2771,10 @@ export type OnCreateBookSubscription = {
           title: string,
           createdAt: string,
           updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -1125,6 +2788,10 @@ export type OnCreateBookSubscription = {
     } | null,
     createdAt: string,
     updatedAt: string,
+    seriesBooksId?: string | null,
+    authorBooksId?: string | null,
+    bookAuthorId: string,
+    bookSeriesId: string,
   } | null,
 };
 
@@ -1141,6 +2808,82 @@ export type OnUpdateBookSubscription = {
       __typename: "Blurb",
       content: string,
     } | null,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    series:  {
+      __typename: "Series",
+      id: string,
+      name: string,
+      description: string,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      authorSeriesId?: string | null,
+      seriesAuthorId: string,
+    },
     parts?:  {
       __typename: "ModelPartConnection",
       items:  Array< {
@@ -1154,6 +2897,10 @@ export type OnUpdateBookSubscription = {
           title: string,
           createdAt: string,
           updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -1167,6 +2914,10 @@ export type OnUpdateBookSubscription = {
     } | null,
     createdAt: string,
     updatedAt: string,
+    seriesBooksId?: string | null,
+    authorBooksId?: string | null,
+    bookAuthorId: string,
+    bookSeriesId: string,
   } | null,
 };
 
@@ -1183,6 +2934,82 @@ export type OnDeleteBookSubscription = {
       __typename: "Blurb",
       content: string,
     } | null,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    series:  {
+      __typename: "Series",
+      id: string,
+      name: string,
+      description: string,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      authorSeriesId?: string | null,
+      seriesAuthorId: string,
+    },
     parts?:  {
       __typename: "ModelPartConnection",
       items:  Array< {
@@ -1196,6 +3023,10 @@ export type OnDeleteBookSubscription = {
           title: string,
           createdAt: string,
           updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
         } | null,
         chapters?:  {
           __typename: "ModelChapterConnection",
@@ -1204,6 +3035,526 @@ export type OnDeleteBookSubscription = {
         createdAt: string,
         updatedAt: string,
         bookPartsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    seriesBooksId?: string | null,
+    authorBooksId?: string | null,
+    bookAuthorId: string,
+    bookSeriesId: string,
+  } | null,
+};
+
+export type OnCreateSeriesSubscriptionVariables = {
+  filter?: ModelSubscriptionSeriesFilterInput | null,
+};
+
+export type OnCreateSeriesSubscription = {
+  onCreateSeries?:  {
+    __typename: "Series",
+    id: string,
+    name: string,
+    description: string,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    authorSeriesId?: string | null,
+    seriesAuthorId: string,
+  } | null,
+};
+
+export type OnUpdateSeriesSubscriptionVariables = {
+  filter?: ModelSubscriptionSeriesFilterInput | null,
+};
+
+export type OnUpdateSeriesSubscription = {
+  onUpdateSeries?:  {
+    __typename: "Series",
+    id: string,
+    name: string,
+    description: string,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    authorSeriesId?: string | null,
+    seriesAuthorId: string,
+  } | null,
+};
+
+export type OnDeleteSeriesSubscriptionVariables = {
+  filter?: ModelSubscriptionSeriesFilterInput | null,
+};
+
+export type OnDeleteSeriesSubscription = {
+  onDeleteSeries?:  {
+    __typename: "Series",
+    id: string,
+    name: string,
+    description: string,
+    author:  {
+      __typename: "Author",
+      id: string,
+      name: string,
+      books?:  {
+        __typename: "ModelBookConnection",
+        items:  Array< {
+          __typename: "Book",
+          id: string,
+          title: string,
+          createdAt: string,
+          updatedAt: string,
+          seriesBooksId?: string | null,
+          authorBooksId?: string | null,
+          bookAuthorId: string,
+          bookSeriesId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      series?:  {
+        __typename: "ModelSeriesConnection",
+        items:  Array< {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    authorSeriesId?: string | null,
+    seriesAuthorId: string,
+  } | null,
+};
+
+export type OnCreateAuthorSubscriptionVariables = {
+  filter?: ModelSubscriptionAuthorFilterInput | null,
+};
+
+export type OnCreateAuthorSubscription = {
+  onCreateAuthor?:  {
+    __typename: "Author",
+    id: string,
+    name: string,
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    series?:  {
+      __typename: "ModelSeriesConnection",
+      items:  Array< {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateAuthorSubscriptionVariables = {
+  filter?: ModelSubscriptionAuthorFilterInput | null,
+};
+
+export type OnUpdateAuthorSubscription = {
+  onUpdateAuthor?:  {
+    __typename: "Author",
+    id: string,
+    name: string,
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    series?:  {
+      __typename: "ModelSeriesConnection",
+      items:  Array< {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteAuthorSubscriptionVariables = {
+  filter?: ModelSubscriptionAuthorFilterInput | null,
+};
+
+export type OnDeleteAuthorSubscription = {
+  onDeleteAuthor?:  {
+    __typename: "Author",
+    id: string,
+    name: string,
+    books?:  {
+      __typename: "ModelBookConnection",
+      items:  Array< {
+        __typename: "Book",
+        id: string,
+        title: string,
+        blurb?:  {
+          __typename: "Blurb",
+          content: string,
+        } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
+        parts?:  {
+          __typename: "ModelPartConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    series?:  {
+      __typename: "ModelSeriesConnection",
+      items:  Array< {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1230,6 +3581,42 @@ export type OnCreatePartSubscription = {
         __typename: "Blurb",
         content: string,
       } | null,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      series:  {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
+      },
       parts?:  {
         __typename: "ModelPartConnection",
         items:  Array< {
@@ -1245,6 +3632,10 @@ export type OnCreatePartSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
+      seriesBooksId?: string | null,
+      authorBooksId?: string | null,
+      bookAuthorId: string,
+      bookSeriesId: string,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -1293,6 +3684,42 @@ export type OnUpdatePartSubscription = {
         __typename: "Blurb",
         content: string,
       } | null,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      series:  {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
+      },
       parts?:  {
         __typename: "ModelPartConnection",
         items:  Array< {
@@ -1308,6 +3735,10 @@ export type OnUpdatePartSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
+      seriesBooksId?: string | null,
+      authorBooksId?: string | null,
+      bookAuthorId: string,
+      bookSeriesId: string,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -1356,6 +3787,42 @@ export type OnDeletePartSubscription = {
         __typename: "Blurb",
         content: string,
       } | null,
+      author:  {
+        __typename: "Author",
+        id: string,
+        name: string,
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        series?:  {
+          __typename: "ModelSeriesConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      series:  {
+        __typename: "Series",
+        id: string,
+        name: string,
+        description: string,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        books?:  {
+          __typename: "ModelBookConnection",
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        authorSeriesId?: string | null,
+        seriesAuthorId: string,
+      },
       parts?:  {
         __typename: "ModelPartConnection",
         items:  Array< {
@@ -1371,6 +3838,10 @@ export type OnDeletePartSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
+      seriesBooksId?: string | null,
+      authorBooksId?: string | null,
+      bookAuthorId: string,
+      bookSeriesId: string,
     } | null,
     chapters?:  {
       __typename: "ModelChapterConnection",
@@ -1424,12 +3895,33 @@ export type OnCreateChapterSubscription = {
           __typename: "Blurb",
           content: string,
         } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
         parts?:  {
           __typename: "ModelPartConnection",
           nextToken?: string | null,
         } | null,
         createdAt: string,
         updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -1479,12 +3971,33 @@ export type OnUpdateChapterSubscription = {
           __typename: "Blurb",
           content: string,
         } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
         parts?:  {
           __typename: "ModelPartConnection",
           nextToken?: string | null,
         } | null,
         createdAt: string,
         updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",
@@ -1534,12 +4047,33 @@ export type OnDeleteChapterSubscription = {
           __typename: "Blurb",
           content: string,
         } | null,
+        author:  {
+          __typename: "Author",
+          id: string,
+          name: string,
+          createdAt: string,
+          updatedAt: string,
+        },
+        series:  {
+          __typename: "Series",
+          id: string,
+          name: string,
+          description: string,
+          createdAt: string,
+          updatedAt: string,
+          authorSeriesId?: string | null,
+          seriesAuthorId: string,
+        },
         parts?:  {
           __typename: "ModelPartConnection",
           nextToken?: string | null,
         } | null,
         createdAt: string,
         updatedAt: string,
+        seriesBooksId?: string | null,
+        authorBooksId?: string | null,
+        bookAuthorId: string,
+        bookSeriesId: string,
       } | null,
       chapters?:  {
         __typename: "ModelChapterConnection",

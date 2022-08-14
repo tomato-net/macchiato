@@ -6,11 +6,28 @@ type Book @model {
     id: ID!
     title: String!
     blurb: Blurb
+    author: Author! @hasOne
+    series: Series! @hasOne
     parts: [Part] @hasMany
 }
 
 type Blurb {
     content: String!
+}
+
+type Series @model {
+    id: ID!
+    name: String!
+    description: String!
+    author: Author! @hasOne
+    books: [Book] @hasMany
+}
+
+type Author @model {
+    id: ID!
+    name: String!
+    books: [Book] @hasMany
+    series: [Series] @hasMany
 }
 
 type Part @model {
