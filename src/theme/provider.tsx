@@ -3,7 +3,7 @@ import {ThemeContext} from "./context";
 import {CssBaseline, ThemeProvider as MThemeProvider} from '@mui/material';
 
 export const ThemeProvider: React.FC<React.PropsWithChildren> = props => {
-   const theme = themes.dark;
+   const theme = themes.light;
 
    return (
        <ThemeContext.Provider value={{theme}}>

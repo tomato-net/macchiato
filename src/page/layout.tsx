@@ -1,16 +1,20 @@
-import {Box, IconButton, Stack} from "@mui/material";
+import {Box, Container, IconButton, Stack} from "@mui/material";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import HomeIcon from '@mui/icons-material/Home';
 import {Outlet} from "react-router-dom";
 
 export const Layout: React.FC<{}> = () => {
     return(
         <Box sx={{ height: '100%', p: 2 }}>
-            <IconButton href={`/create`} aria-label="delete">
+            <IconButton href={`/create`} aria-label={`delete`}>
                 <AddCircleIcon />
             </IconButton>
-            <Stack sx={{ width: '100%' }}>
+            <IconButton href={`/`} aria-label={`home`}>
+                <HomeIcon />
+            </IconButton>
+            <Container>
                 <Outlet />
-            </Stack>
+            </Container>
         </Box>
     )
 }
