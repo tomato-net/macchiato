@@ -1,4 +1,5 @@
-import {Box, Typography} from "@mui/material";
+import {Box, Card, Grid, IconButton, Link, Typography} from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
 import {Book, ListBooksQuery} from "../API";
 import {API, graphqlOperation} from "aws-amplify";
 import {listBooks} from "../graphql/queries";
@@ -18,11 +19,38 @@ export const Home: React.FC<{}> = () => {
 
     return(
         <Box>
-            {books && books.map((b) => (
-                <li key={b.id}>
-                        {b.title} : {b.blurb?.content} : {b.author.name} : {b.series.name}
-                </li>
-            ))}
+            <Grid container justifyContent={`center`} spacing={2}>
+                {books && books.map((b) => (
+                    <Grid key={b.id} item xs={3}>
+                        <Link href={`/listen/${b.id}`} underline={`none`}>
+                            <Card
+                                sx={{
+                                    height: 300,
+                                    width: 250,
+                                    backgroundColor: (theme) =>
+                                        theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+                                }}>
+                                <Grid container justifyContent={`center`} textAlign={`center`} spacing={0}>
+                                    <Grid key={`edit`} item xs={12}>
+                                        <IconButton href={`/edit/${b.id}`}>
+                                            <EditIcon />
+                                        </IconButton>
+                                    </Grid>
+                                    <Grid key={`title`} item xs={12}>
+                                        {b.title}
+                                    </Grid>
+                                    <Grid key={`author`} item xs={6}>
+                                        {b.author.name}
+                                    </Grid>
+                                    <Grid key={`series`} item xs={6}>
+                                        {b.series.name}
+                                    </Grid>
+                                </Grid>
+                            </Card>
+                        </Link>
+                    </Grid>
+                ))}
+            </Grid>
         </Box>
     )
 }
